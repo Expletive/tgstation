@@ -28,4 +28,6 @@ datum/species/human/on_species_gain(mob/living/carbon/human/H, datum/species/old
 	if(H.dna.features["tail_human"] == "Cat")
 		var/tail = /obj/item/organ/tail/cat
 		mutant_organs += tail
+	if(H.dna.features["ears"] == "Cat" || H.dna.features["tail_human"] == "Cat")
+		mutanttongue = /obj/item/organ/tongue/cat
 	..()

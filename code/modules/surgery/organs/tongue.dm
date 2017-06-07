@@ -193,3 +193,45 @@
 
 /obj/item/organ/tongue/robot/get_spans()
 	return ..() | SPAN_ROBOT
+
+
+/obj/item/organ/tongue/cat
+	name = "cat tongue"
+	desc = "A tongue from a cat, or cat-like person."
+	say_mod = "meows"
+	taste_sensitivity = 10
+
+/obj/item/organ/tongue/cat/TongueSpeech(var/message)
+	var/regex/nya = new("na", "g")
+	var/regex/nye = new("ne", "g")
+	var/regex/nyi = new("ni", "g")
+	var/regex/nyo = new("no", "g")
+	var/regex/nyu = new("nu", "g")
+	var/regex/Nya = new("Na", "g")
+	var/regex/Nye = new("Ne", "g")
+	var/regex/Nyi = new("Ni", "g")
+	var/regex/Nyo = new("No", "g")
+	var/regex/Nyu = new("Nu", "g")
+	if(copytext(message, 1, 2) != "*")
+		message = nya.Replace(message, "nya")
+		message = Nya.Replace(message, "Nya")
+		message = nye.Replace(message, "nye")
+		message = Nye.Replace(message, "Nye")
+		message = nyi.Replace(message, "nyi")
+		message = Nyi.Replace(message, "Nyi")
+		message = nyo.Replace(message, "nyo")
+		message = Nyo.Replace(message, "Nyo")
+		message = nyu.Replace(message, "nyu")
+		message = Nyu.Replace(message, "Nyu")
+
+	var/list/message_list = splittext(message, " ")
+	var/maxchanges = max(round(message_list.len / 1.5), 2)
+
+	for(var/i = rand(maxchanges / 2, maxchanges), i > 0, i--)
+		var/insertpos = rand(1, message_list.len - 1)
+		var/inserttext = message_list[insertpos]
+
+	if(prob(10) && message_list.len > 3)
+		message_list.Insert(insertpos, "nya", "nyaa", "nyaah", "nyahaha")
+
+	return jointext(message_list, " ")
