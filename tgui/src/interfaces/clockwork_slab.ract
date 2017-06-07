@@ -27,7 +27,11 @@
 				{{#if bound}}
 					<ui-button action='bind' params='{"category": "{{type}}"}'>Unbind {{{bound}}}</ui-button>
 				{{else}}
-					<ui-button action='bind' params='{"category": "{{type}}"}'>Quickbind</ui-button>
+					<ui-button grid class="slotselect" action='bind' params='{"category": "{{type}}", "slot" : "1"}'>1</ui-button>
+					<ui-button grid class="slotselect" action='bind' params='{"category": "{{type}}", "slot" : "2"}'>2</ui-button>
+					<ui-button grid class="slotselect" action='bind' params='{"category": "{{type}}", "slot" : "3"}'>3</ui-button>
+					<ui-button grid class="slotselect" action='bind' params='{"category": "{{type}}", "slot" : "4"}'>4</ui-button>
+					<ui-button grid class="slotselect" action='bind' params='{"category": "{{type}}", "slot" : "5"}'>5</ui-button>
 				{{/if}}
 		  	{{/if}}
 		  	{{{name}}} {{{descname}}} {{{invokers}}}</div>

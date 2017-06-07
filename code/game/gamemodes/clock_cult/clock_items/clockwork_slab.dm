@@ -482,6 +482,7 @@
 				target_component_id = components[input_component]
 		if("bind")
 			var/datum/clockwork_scripture/path = text2path(params["category"]) //we need a path and not a string
+			var/quickbindslot = text2num(params["slot"])
 			var/found_index = quickbound.Find(path)
 			if(found_index) //hey, we already HAVE this bound
 				if(LAZYLEN(quickbound) == found_index) //if it's the last scripture, remove it instead of leaving a null
@@ -490,7 +491,7 @@
 					quickbound[found_index] = null //otherwise, leave it as a null so the scripture maintains position
 				update_quickbind()
 			else
-				var/target_index = input("Position of [initial(path.name)], 1 to [maximum_quickbound]?", "Input")  as num|null
+				var/target_index = quickbindslot //input("Position of [initial(path.name)], 1 to [maximum_quickbound]?", "Input")  as num|null
 				if(isnum(target_index) && target_index > 0 && target_index <= maximum_quickbound && !..())
 					var/datum/clockwork_scripture/S
 					if(LAZYLEN(quickbound) >= target_index)
