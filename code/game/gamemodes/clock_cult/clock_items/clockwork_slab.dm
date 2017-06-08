@@ -418,7 +418,7 @@
 			else
 				data["tier_info"] = "<font color=#B18B25><i>This scripture requires at least <b>[JUDGEMENT_SERVANT_REQ]</b> Servants, <b>[JUDGEMENT_CACHE_REQ]</b> Tinkerer's Caches, and <b>[JUDGEMENT_CV_REQ]CV</b>.<br>In addition, there may not be any active non-Servant AIs.</i></font>"
 
-	data["selected"] = selected_scripture
+	data["selected"] = lowertext(selected_scripture)
 
 	data["target_comp"] = "<font color=#B18B25>NONE</font>"
 	if(target_component_id) //if we have a component to make, display that, too

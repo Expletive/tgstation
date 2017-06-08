@@ -14,28 +14,28 @@
 	</ui-display>
 	<ui-display>
 		<ui-section>
-			<ui-button state='{{data.selected == "Driver" ? "selected" : null}}' action='select' params='{"category": "Driver"}'>Driver</ui-button> 
-			<ui-button state='{{data.selected == "Script" ? "selected" : null}}' action='select' params='{"category": "Script"}'>Scripts</ui-button> 
-			<ui-button state='{{data.selected == "Application" ? "selected" : null}}' action='select' params='{"category": "Application"}'>Applications</ui-button> 
-			<ui-button state='{{data.selected == "Judgement" ? "selected" : null}}' action='select' params='{"category": "Judgement"}'>Judgement</ui-button>
+			<ui-button state='{{data.selected == "driver" ? "selected" : null}}' action='select' params='{"category": "Driver"}'>Driver</ui-button> 
+			<ui-button state='{{data.selected == "script" ? "selected" : null}}' action='select' params='{"category": "Script"}'>Scripts</ui-button> 
+			<ui-button state='{{data.selected == "application" ? "selected" : null}}' action='select' params='{"category": "Application"}'>Applications</ui-button> 
+			<ui-button state='{{data.selected == "judgement" ? "selected" : null}}' action='select' params='{"category": "Judgement"}'>Judgement</ui-button>
 			<br>{{{data.tier_info}}}
 		</ui-section><hr>
-		<ui-section>
 		{{#each data.scripture}}
-			<div><ui-button tooltip='{{{tip}}}' tooltip-side='right' action='recite' params='{"category": "{{type}}"}'>Recite{{{required}}}</ui-button>
-		 	 {{#if quickbind}}
+			<ui-section>
+				<ui-button tooltip='{{{tip}}}' tooltip-side='right' action='recite' params='{"category": "{{type}}"}'>Recite{{{required}}}</ui-button>
+		 	{{#if quickbind}}
 				{{#if bound}}
-					<ui-button action='bind' params='{"category": "{{type}}"}'>Unbind {{{bound}}}</ui-button>
+					<ui-button class="unbind" action='bind' params='{"category": "{{type}}"}'>Unbind {{{bound}}}</ui-button>
 				{{else}}
-					<ui-button grid class="slotselect" action='bind' params='{"category": "{{type}}", "slot" : "1"}'>1</ui-button>
-					<ui-button grid class="slotselect" action='bind' params='{"category": "{{type}}", "slot" : "2"}'>2</ui-button>
-					<ui-button grid class="slotselect" action='bind' params='{"category": "{{type}}", "slot" : "3"}'>3</ui-button>
-					<ui-button grid class="slotselect" action='bind' params='{"category": "{{type}}", "slot" : "4"}'>4</ui-button>
-					<ui-button grid class="slotselect" action='bind' params='{"category": "{{type}}", "slot" : "5"}'>5</ui-button>
+					<ui-button class="slotselect" action='bind' params='{"category": "{{type}}", "slot" : "1"}'>1</ui-button>
+					<ui-button class="slotselect" action='bind' params='{"category": "{{type}}", "slot" : "2"}'>2</ui-button>
+					<ui-button class="slotselect" action='bind' params='{"category": "{{type}}", "slot" : "3"}'>3</ui-button>
+					<ui-button class="slotselect" action='bind' params='{"category": "{{type}}", "slot" : "4"}'>4</ui-button>
+					<ui-button class="slotselect" action='bind' params='{"category": "{{type}}", "slot" : "5"}'>5</ui-button>
 				{{/if}}
 		  	{{/if}}
-		  	{{{name}}} {{{descname}}} {{{invokers}}}</div>
+			{{{name}}} {{{descname}}} {{{invokers}}}
+			</ui-section>
 		{{/each}}
-		</ui-section>
 	</ui-display>
 {{/if}}
