@@ -99,6 +99,7 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/update_inv_w_uniform(invdrop = TRUE)
 	remove_overlay(UNIFORM_LAYER)
+	remove_overlay(ABOVE_SUIT_LAYER)
 
 	if(client && hud_used)
 		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_w_uniform]
@@ -134,13 +135,18 @@ There are several things that need to be remembered:
 		if(!uniform_overlay)
 			uniform_overlay = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/uniform.dmi', isinhands = FALSE)
 
-		overlays_standing[UNIFORM_LAYER] = uniform_overlay
+		if(islist(uniform_overlay) && uniform_overlay[1] && uniform_overlay[2])
+			overlays_standing[UNIFORM_LAYER] = uniform_overlay[1]
+			overlays_standing[ABOVE_SUIT_LAYER] = uniform_overlay[2]
+		else
+			overlays_standing[UNIFORM_LAYER] = uniform_overlay
 
 	else if(!(dna && dna.species.nojumpsuit) && invdrop)
 		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
 		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))						//
 			dropItemToGround(thing)
 
+	apply_overlay(ABOVE_SUIT_LAYER)
 	apply_overlay(UNIFORM_LAYER)
 	update_mutant_bodyparts()
 
@@ -449,7 +455,6 @@ generate/load female uniform sprites matching all previously decided variables
 
 */
 /obj/item/proc/build_worn_icon(var/state = "", var/default_layer = 0, var/default_icon_file = null, var/isinhands = FALSE, var/femaleuniform = NO_FEMALE_UNIFORM)
-
 	//Find a valid icon file from variables+arguments
 	var/file2use
 	if(!isinhands && alternate_worn_icon)
@@ -470,10 +475,15 @@ generate/load female uniform sprites matching all previously decided variables
 	if(!standing)
 		standing = mutable_appearance(file2use, state, -layer2use)
 
+	. = standing
 	//Get the overlays for this item when it's being worn
 	//eg: ammo counters, primed grenade flashes, etc.
 	var/list/worn_overlays = worn_overlays(isinhands)
-	if(worn_overlays && worn_overlays.len)
+	if(islist(worn_overlays["parent"]))
+		standing.overlays.Add(worn_overlays["parent"])
+		. = list(standing, worn_overlays["mob"])
+
+	else if(worn_overlays && worn_overlays.len)
 		standing.overlays.Add(worn_overlays)
 
 	standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension)
@@ -489,7 +499,6 @@ generate/load female uniform sprites matching all previously decided variables
 	standing.alpha = alpha
 	standing.color = color
 
-	return standing
 
 
 /obj/item/proc/get_held_offsets()

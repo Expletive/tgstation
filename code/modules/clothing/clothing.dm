@@ -477,14 +477,14 @@ BLIND     // can't see anything
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damaged[blood_overlay_type]")
 		if(blood_DNA)
 			. += mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
-		var/mob/living/carbon/human/M = loc
+/*		var/mob/living/carbon/human/M = loc
 		if(ishuman(M) && M.w_uniform)
 			var/obj/item/clothing/under/U = M.w_uniform
 			if(istype(U) && U.attached_accessory)
 				var/obj/item/clothing/accessory/A = U.attached_accessory
 				if(A.above_suit)
 					. += U.accessory_overlay
-
+*/
 /obj/item/clothing/suit/update_clothes_damaged_state(damaging = TRUE)
 	..()
 	if(ismob(loc))
@@ -556,15 +556,18 @@ BLIND     // can't see anything
 	var/mutantrace_variation = NO_MUTANTRACE_VARIATION //Are there special sprites for specific situations? Don't use this unless you need to.
 
 /obj/item/clothing/under/worn_overlays(isinhands = FALSE)
-	. = list()
-	if(!isinhands)
+	var/list/overlays = list("parent" = list(), "mob" = list())
 
+	if(!isinhands)
 		if(damaged_clothes)
-			. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
+			overlays["parent"] += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
 		if(blood_DNA)
-			. += mutable_appearance('icons/effects/blood.dmi', "uniformblood")
+			overlays["parent"] += mutable_appearance('icons/effects/blood.dmi', "uniformblood")
 		if(accessory_overlay)
-			. += accessory_overlay
+			if(attached_accessory.above_suit)
+				overlays["mob"] += accessory_overlay
+			else
+				overlays["parent"] += accessory_overlay
 
 /obj/item/clothing/under/attackby(obj/item/W, mob/user, params)
 	if((has_sensor == BROKEN_SENSORS) && istype(W, /obj/item/stack/cable_coil))
